@@ -1,4 +1,5 @@
 import unittest
+import time
 
 from hw_asr.datasets import LibrispeechDataset, CustomDirAudioDataset
 from hw_asr.text_encoder.ctc_char_text_encoder import CTCCharTextEncoder
@@ -9,6 +10,7 @@ from hw_asr.utils.parse_config import ConfigParser
 class TestDataset(unittest.TestCase):
     def test_librispeech(self):
         text_encoder = CTCCharTextEncoder.get_simple_alphabet()
+        time.sleep(1)
         config_parser = ConfigParser.get_default_configs()
 
         ds = LibrispeechDataset(
@@ -19,6 +21,7 @@ class TestDataset(unittest.TestCase):
 
     def test_custom_dataset(self):
         text_encoder = CTCCharTextEncoder.get_simple_alphabet()
+        time.sleep(1)
         config_parser = ConfigParser.get_default_configs()
 
         audio_dir = str(ROOT_PATH / 'test_data' / 'audio')

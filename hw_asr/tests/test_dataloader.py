@@ -1,4 +1,5 @@
 import unittest
+import time
 
 from hw_asr.collate_fn.collate import collate_fn
 from hw_asr.datasets import LibrispeechDataset
@@ -9,6 +10,7 @@ from hw_asr.utils.parse_config import ConfigParser
 class TestDataloader(unittest.TestCase):
     def test_collate_fn(self):
         text_encoder = CTCCharTextEncoder.get_simple_alphabet()
+        time.sleep(1)
         config_parser = ConfigParser.get_default_configs()
 
         ds = LibrispeechDataset(
