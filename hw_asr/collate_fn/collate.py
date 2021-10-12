@@ -38,8 +38,9 @@ def collate_fn(dataset_items: List[dict]):
         text_enc_out[i, :text_enc_lengths[i]] = item['text_encoded']
 
     return {
-        'spectrogram':spec_out,
-        'text_encoded':text_enc_out.int(),
-        'text_encoded_length':torch.tensor(text_enc_lengths),
-        'text':initial_normalised_encodings
+        'spectrogram': spec_out.transpose(1, 2),
+        'text_encoded': text_enc_out.int(),
+        'text_encoded_length': torch.tensor(text_enc_lengths),
+        'text': initial_normalised_encodings,
+        'spectrogram_length': torch.tensor(spectrogram_lengths)
     }

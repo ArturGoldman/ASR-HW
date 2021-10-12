@@ -103,4 +103,3 @@ if __name__ == "__main__":
         "dev-clean", text_encoder=text_encoder, config_parser=config_parser
     )
     item = ds[0]
-    print(item)

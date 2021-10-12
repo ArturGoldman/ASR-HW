@@ -137,7 +137,10 @@ class Trainer(BaseTrainer):
                     continue
                 else:
                     raise e
-            if batch_idx >= self.len_epoch:
+
+            # why not self.len_epoch-1? If i want to train just 1 batch 2 will be trained in fact
+            # was just self.len_epoch
+            if batch_idx >= self.len_epoch-1:
                 break
         log = self.train_metrics.result()
 
