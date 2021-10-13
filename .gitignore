@@ -107,7 +107,7 @@ saved/
 wandb/
 
 # my_checkpoint
-hw_asr/overfit_trial/checkpoint-epoch50.pth
+overfit_trial/checkpoint-epoch50.pth
 
 # editor, os cache directory
 .vscode/
