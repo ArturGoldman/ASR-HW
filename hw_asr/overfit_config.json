@@ -17,7 +17,7 @@
     "type": "BasicGRU",
     "args": {
       "n_feats": 128,
-      "hidden_size": 512,
+      "fc_hidden": 512,
       "n_layers": 2
     }
   },
@@ -79,7 +79,8 @@
     "verbosity": 2,
     "monitor": "min val_loss",
     "early_stop": 100,
-    "tensorboard": true,
+    "visualize": "wandb",
+    "wandb_project": "asr_project",
     "len_epoch": 30,
     "grad_norm_clip": 10
   }
