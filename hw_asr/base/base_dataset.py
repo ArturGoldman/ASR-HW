@@ -114,7 +114,7 @@ class BaseDataset(Dataset):
             exceeds_audio_length = False
 
         initial_size = len(index)
-        if max_audio_length is not None:
+        if max_text_length is not None:
             exceeds_text_length = np.array(
                # [
                #     el

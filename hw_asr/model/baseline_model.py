@@ -41,3 +41,23 @@ class BasicLSTM(BaseModel):
 
     def transform_input_lengths(self, input_lengths):
         return input_lengths  # we don't reduce time dimension here
+
+
+class BasicGRU(BaseModel):
+    def __init__(self, n_feats, n_class, n_layers=3, hidden_size=512, *args, **kwargs):
+        super().__init__(n_feats, n_class, *args, **kwargs)
+        self.net = nn.GRU(n_feats, hidden_size, n_layers, dropout=0.1, batch_first=True)
+        self.tail = nn.Sequential(
+            Linear(hidden_size, hidden_size // 2),
+            nn.ReLU(),
+            Linear(hidden_size // 2, n_class)
+        )
+
+    def forward(self, spectrogram, *args, **kwargs):
+        output, _ = self.net(spectrogram)
+        output = nn.ReLU()(output)
+        output = self.tail(output)
+        return output
+
+    def transform_input_lengths(self, input_lengths):
+        return input_lengths  # we don't reduce time dimension here
