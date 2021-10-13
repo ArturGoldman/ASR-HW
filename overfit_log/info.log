@@ -1,0 +1,273 @@
+2021-10-13 13:32:18,104 - hw_asr.base.base_dataset - INFO - 1 (0.0%) records are longer then 20.0 seconds. Excluding them.
+2021-10-13 13:32:18,191 - hw_asr.base.base_dataset - INFO - 126 (0.4%) records are longer then 20.0 characters. Excluding them.
+2021-10-13 13:32:18,193 - hw_asr.base.base_dataset - INFO - Filtered 126(0.4%) records  from dataset
+2021-10-13 13:32:18,326 - train - INFO - BasicGRU(
+  (net): GRU(128, 512, num_layers=2, batch_first=True, dropout=0.1)
+  (tail): Sequential(
+    (0): Linear(in_features=512, out_features=256, bias=True)
+    (1): ReLU()
+    (2): Linear(in_features=256, out_features=28, bias=True)
+  )
+)
+Trainable parameters: 2700572
+2021-10-13 13:33:08,643 - trainer - INFO -     epoch          : 1
+2021-10-13 13:33:08,644 - trainer - INFO -     loss           : 9.370455280939739
+2021-10-13 13:33:08,644 - trainer - INFO -     grad norm      : 8.136086781819662
+2021-10-13 13:33:08,644 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:33:08,644 - trainer - INFO -     CER (argmax)   : 0.9929186840085414
+2021-10-13 13:33:08,644 - trainer - WARNING - Warning: Metric 'val_loss' is not found. Model performance monitoring is disabled.
+2021-10-13 13:33:49,596 - trainer - INFO -     epoch          : 2
+2021-10-13 13:33:49,597 - trainer - INFO -     loss           : 3.6137100299199423
+2021-10-13 13:33:49,597 - trainer - INFO -     grad norm      : 8.199662744998932
+2021-10-13 13:33:49,597 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:33:49,597 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:34:30,769 - trainer - INFO -     epoch          : 3
+2021-10-13 13:34:30,770 - trainer - INFO -     loss           : 3.0028408765792847
+2021-10-13 13:34:30,770 - trainer - INFO -     grad norm      : 4.825359366337458
+2021-10-13 13:34:30,770 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:34:30,770 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:35:12,404 - trainer - INFO -     epoch          : 4
+2021-10-13 13:35:12,405 - trainer - INFO -     loss           : 2.910484027862549
+2021-10-13 13:35:12,405 - trainer - INFO -     grad norm      : 2.0882739573717117
+2021-10-13 13:35:12,405 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:35:12,405 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:35:54,489 - trainer - INFO -     epoch          : 5
+2021-10-13 13:35:54,490 - trainer - INFO -     loss           : 2.8882219235102338
+2021-10-13 13:35:54,490 - trainer - INFO -     grad norm      : 0.9671456520756085
+2021-10-13 13:35:54,490 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:35:54,490 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:35:54,590 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch5.pth ...
+2021-10-13 13:36:36,043 - trainer - INFO -     epoch          : 6
+2021-10-13 13:36:36,043 - trainer - INFO -     loss           : 2.8801552136739095
+2021-10-13 13:36:36,043 - trainer - INFO -     grad norm      : 0.43611084992686905
+2021-10-13 13:36:36,044 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:36:36,044 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:37:17,457 - trainer - INFO -     epoch          : 7
+2021-10-13 13:37:17,457 - trainer - INFO -     loss           : 2.8749483029047647
+2021-10-13 13:37:17,458 - trainer - INFO -     grad norm      : 0.20433838590979575
+2021-10-13 13:37:17,458 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:37:17,458 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:37:59,233 - trainer - INFO -     epoch          : 8
+2021-10-13 13:37:59,234 - trainer - INFO -     loss           : 2.8661789973576863
+2021-10-13 13:37:59,234 - trainer - INFO -     grad norm      : 0.0880099032074213
+2021-10-13 13:37:59,234 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:37:59,234 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:38:41,310 - trainer - INFO -     epoch          : 9
+2021-10-13 13:38:41,310 - trainer - INFO -     loss           : 2.8528373003005982
+2021-10-13 13:38:41,311 - trainer - INFO -     grad norm      : 0.04447342107693354
+2021-10-13 13:38:41,311 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:38:41,311 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:39:23,395 - trainer - INFO -     epoch          : 10
+2021-10-13 13:39:23,396 - trainer - INFO -     loss           : 2.841695213317871
+2021-10-13 13:39:23,396 - trainer - INFO -     grad norm      : 0.10131394031147162
+2021-10-13 13:39:23,396 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:39:23,396 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:39:23,489 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch10.pth ...
+2021-10-13 13:40:05,752 - trainer - INFO -     epoch          : 11
+2021-10-13 13:40:05,752 - trainer - INFO -     loss           : 2.830086890856425
+2021-10-13 13:40:05,753 - trainer - INFO -     grad norm      : 0.1394198941687743
+2021-10-13 13:40:05,753 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:40:05,753 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:40:48,167 - trainer - INFO -     epoch          : 12
+2021-10-13 13:40:48,167 - trainer - INFO -     loss           : 2.8070205132166546
+2021-10-13 13:40:48,168 - trainer - INFO -     grad norm      : 0.17107433589796225
+2021-10-13 13:40:48,168 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:40:48,168 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:41:31,015 - trainer - INFO -     epoch          : 13
+2021-10-13 13:41:31,016 - trainer - INFO -     loss           : 2.7648364623387653
+2021-10-13 13:41:31,016 - trainer - INFO -     grad norm      : 0.4464158927400907
+2021-10-13 13:41:31,016 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:41:31,016 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:42:14,294 - trainer - INFO -     epoch          : 14
+2021-10-13 13:42:14,294 - trainer - INFO -     loss           : 2.697918979326884
+2021-10-13 13:42:14,295 - trainer - INFO -     grad norm      : 0.4758574436108271
+2021-10-13 13:42:14,295 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:42:14,295 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:42:57,729 - trainer - INFO -     epoch          : 15
+2021-10-13 13:42:57,729 - trainer - INFO -     loss           : 2.624520683288574
+2021-10-13 13:42:57,729 - trainer - INFO -     grad norm      : 1.548892233769099
+2021-10-13 13:42:57,730 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:42:57,730 - trainer - INFO -     CER (argmax)   : 1.0
+2021-10-13 13:42:57,808 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch15.pth ...
+2021-10-13 13:43:40,625 - trainer - INFO -     epoch          : 16
+2021-10-13 13:43:40,625 - trainer - INFO -     loss           : 2.4984413226445517
+2021-10-13 13:43:40,625 - trainer - INFO -     grad norm      : 1.384156514207522
+2021-10-13 13:43:40,625 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:43:40,625 - trainer - INFO -     CER (argmax)   : 0.9985951704672219
+2021-10-13 13:44:23,349 - trainer - INFO -     epoch          : 17
+2021-10-13 13:44:23,349 - trainer - INFO -     loss           : 2.2908611138661703
+2021-10-13 13:44:23,349 - trainer - INFO -     grad norm      : 1.1960720360279082
+2021-10-13 13:44:23,350 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:44:23,350 - trainer - INFO -     CER (argmax)   : 0.9918882285797302
+2021-10-13 13:45:05,981 - trainer - INFO -     epoch          : 18
+2021-10-13 13:45:05,982 - trainer - INFO -     loss           : 2.132149402300517
+2021-10-13 13:45:05,982 - trainer - INFO -     grad norm      : 2.9047914405663806
+2021-10-13 13:45:05,982 - trainer - INFO -     WER (argmax)   : 0.9999652777777778
+2021-10-13 13:45:05,982 - trainer - INFO -     CER (argmax)   : 0.9893220132272695
+2021-10-13 13:45:48,725 - trainer - INFO -     epoch          : 19
+2021-10-13 13:45:48,725 - trainer - INFO -     loss           : 1.771418841679891
+2021-10-13 13:45:48,725 - trainer - INFO -     grad norm      : 2.6395884275436403
+2021-10-13 13:45:48,726 - trainer - INFO -     WER (argmax)   : 1.0
+2021-10-13 13:45:48,726 - trainer - INFO -     CER (argmax)   : 0.947523010926493
+2021-10-13 13:46:31,627 - trainer - INFO -     epoch          : 20
+2021-10-13 13:46:31,627 - trainer - INFO -     loss           : 1.1947767794132234
+2021-10-13 13:46:31,627 - trainer - INFO -     grad norm      : 2.040837647517522
+2021-10-13 13:46:31,627 - trainer - INFO -     WER (argmax)   : 0.9784447360512415
+2021-10-13 13:46:31,628 - trainer - INFO -     CER (argmax)   : 0.7015163218190127
+2021-10-13 13:46:31,702 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch20.pth ...
+2021-10-13 13:47:14,551 - trainer - INFO -     epoch          : 21
+2021-10-13 13:47:14,552 - trainer - INFO -     loss           : 0.7948278566201528
+2021-10-13 13:47:14,552 - trainer - INFO -     grad norm      : 2.7374265591303506
+2021-10-13 13:47:14,552 - trainer - INFO -     WER (argmax)   : 0.8286336965098106
+2021-10-13 13:47:14,552 - trainer - INFO -     CER (argmax)   : 0.3539744569543615
+2021-10-13 13:47:57,546 - trainer - INFO -     epoch          : 22
+2021-10-13 13:47:57,547 - trainer - INFO -     loss           : 0.3459843496481578
+2021-10-13 13:47:57,547 - trainer - INFO -     grad norm      : 0.7275717705488205
+2021-10-13 13:47:57,547 - trainer - INFO -     WER (argmax)   : 0.45970685141114315
+2021-10-13 13:47:57,547 - trainer - INFO -     CER (argmax)   : 0.13735139056343135
+2021-10-13 13:48:40,484 - trainer - INFO -     epoch          : 23
+2021-10-13 13:48:40,484 - trainer - INFO -     loss           : 0.18342727447549503
+2021-10-13 13:48:40,484 - trainer - INFO -     grad norm      : 0.3631543641289075
+2021-10-13 13:48:40,484 - trainer - INFO -     WER (argmax)   : 0.23578400108794587
+2021-10-13 13:48:40,485 - trainer - INFO -     CER (argmax)   : 0.06277687107101765
+2021-10-13 13:49:23,123 - trainer - INFO -     epoch          : 24
+2021-10-13 13:49:23,123 - trainer - INFO -     loss           : 0.10042538220683733
+2021-10-13 13:49:23,123 - trainer - INFO -     grad norm      : 0.26352326273918153
+2021-10-13 13:49:23,124 - trainer - INFO -     WER (argmax)   : 0.11914157096699977
+2021-10-13 13:49:23,124 - trainer - INFO -     CER (argmax)   : 0.03277146246351997
+2021-10-13 13:50:05,583 - trainer - INFO -     epoch          : 25
+2021-10-13 13:50:05,583 - trainer - INFO -     loss           : 1.8728929852445921
+2021-10-13 13:50:05,584 - trainer - INFO -     grad norm      : 5.341983786722024
+2021-10-13 13:50:05,584 - trainer - INFO -     WER (argmax)   : 0.6016088678045272
+2021-10-13 13:50:05,584 - trainer - INFO -     CER (argmax)   : 0.3670857438550559
+2021-10-13 13:50:05,655 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch25.pth ...
+2021-10-13 13:50:48,204 - trainer - INFO -     epoch          : 26
+2021-10-13 13:50:48,204 - trainer - INFO -     loss           : 0.5850203484296799
+2021-10-13 13:50:48,205 - trainer - INFO -     grad norm      : 0.8318389068047206
+2021-10-13 13:50:48,205 - trainer - INFO -     WER (argmax)   : 0.5601942764111417
+2021-10-13 13:50:48,205 - trainer - INFO -     CER (argmax)   : 0.21060015957255793
+2021-10-13 13:51:30,852 - trainer - INFO -     epoch          : 27
+2021-10-13 13:51:30,853 - trainer - INFO -     loss           : 0.15402440081040064
+2021-10-13 13:51:30,853 - trainer - INFO -     grad norm      : 0.3806370218594869
+2021-10-13 13:51:30,853 - trainer - INFO -     WER (argmax)   : 0.17902940371940934
+2021-10-13 13:51:30,853 - trainer - INFO -     CER (argmax)   : 0.05025684244017359
+2021-10-13 13:52:13,579 - trainer - INFO -     epoch          : 28
+2021-10-13 13:52:13,579 - trainer - INFO -     loss           : 0.12660962343215942
+2021-10-13 13:52:13,579 - trainer - INFO -     grad norm      : 0.3618167276183764
+2021-10-13 13:52:13,580 - trainer - INFO -     WER (argmax)   : 0.12181616363328224
+2021-10-13 13:52:13,580 - trainer - INFO -     CER (argmax)   : 0.03789913835387727
+2021-10-13 13:52:56,418 - trainer - INFO -     epoch          : 29
+2021-10-13 13:52:56,418 - trainer - INFO -     loss           : 0.08562882815798124
+2021-10-13 13:52:56,418 - trainer - INFO -     grad norm      : 0.19535581519206366
+2021-10-13 13:52:56,419 - trainer - INFO -     WER (argmax)   : 0.09029814744828595
+2021-10-13 13:52:56,419 - trainer - INFO -     CER (argmax)   : 0.02985573803621171
+2021-10-13 13:53:39,487 - trainer - INFO -     epoch          : 30
+2021-10-13 13:53:39,487 - trainer - INFO -     loss           : 0.11347606480121612
+2021-10-13 13:53:39,488 - trainer - INFO -     grad norm      : 0.3329520136117935
+2021-10-13 13:53:39,488 - trainer - INFO -     WER (argmax)   : 0.1024560582418385
+2021-10-13 13:53:39,488 - trainer - INFO -     CER (argmax)   : 0.03585944394783404
+2021-10-13 13:53:39,565 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch30.pth ...
+2021-10-13 13:54:22,497 - trainer - INFO -     epoch          : 31
+2021-10-13 13:54:22,497 - trainer - INFO -     loss           : 0.10775226727128029
+2021-10-13 13:54:22,497 - trainer - INFO -     grad norm      : 0.4998559484879176
+2021-10-13 13:54:22,498 - trainer - INFO -     WER (argmax)   : 0.12147482309759246
+2021-10-13 13:54:22,498 - trainer - INFO -     CER (argmax)   : 0.038510856027368916
+2021-10-13 13:55:05,531 - trainer - INFO -     epoch          : 32
+2021-10-13 13:55:05,531 - trainer - INFO -     loss           : 0.08432854463656743
+2021-10-13 13:55:05,532 - trainer - INFO -     grad norm      : 0.27746900767087934
+2021-10-13 13:55:05,532 - trainer - INFO -     WER (argmax)   : 0.09219989702171326
+2021-10-13 13:55:05,532 - trainer - INFO -     CER (argmax)   : 0.029919109374891006
+2021-10-13 13:55:47,999 - trainer - INFO -     epoch          : 33
+2021-10-13 13:55:48,000 - trainer - INFO -     loss           : 0.07563284064332644
+2021-10-13 13:55:48,000 - trainer - INFO -     grad norm      : 0.24284187108278274
+2021-10-13 13:55:48,000 - trainer - INFO -     WER (argmax)   : 0.07963762727931281
+2021-10-13 13:55:48,000 - trainer - INFO -     CER (argmax)   : 0.026499043668982532
+2021-10-13 13:56:30,720 - trainer - INFO -     epoch          : 34
+2021-10-13 13:56:30,721 - trainer - INFO -     loss           : 0.0768442948659261
+2021-10-13 13:56:30,721 - trainer - INFO -     grad norm      : 0.20888032466173173
+2021-10-13 13:56:30,721 - trainer - INFO -     WER (argmax)   : 0.09148020297701928
+2021-10-13 13:56:30,721 - trainer - INFO -     CER (argmax)   : 0.029017128310515946
+2021-10-13 13:57:13,463 - trainer - INFO -     epoch          : 35
+2021-10-13 13:57:13,464 - trainer - INFO -     loss           : 0.0640504519144694
+2021-10-13 13:57:13,464 - trainer - INFO -     grad norm      : 0.15308708623051642
+2021-10-13 13:57:13,464 - trainer - INFO -     WER (argmax)   : 0.08150197805677391
+2021-10-13 13:57:13,464 - trainer - INFO -     CER (argmax)   : 0.02716689571660881
+2021-10-13 13:57:13,533 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch35.pth ...
+2021-10-13 13:57:56,381 - trainer - INFO -     epoch          : 36
+2021-10-13 13:57:56,381 - trainer - INFO -     loss           : 0.057905068000157676
+2021-10-13 13:57:56,382 - trainer - INFO -     grad norm      : 0.15572195972005526
+2021-10-13 13:57:56,382 - trainer - INFO -     WER (argmax)   : 0.07433407055198622
+2021-10-13 13:57:56,382 - trainer - INFO -     CER (argmax)   : 0.024597249826006893
+2021-10-13 13:58:39,196 - trainer - INFO -     epoch          : 37
+2021-10-13 13:58:39,197 - trainer - INFO -     loss           : 0.055770379553238554
+2021-10-13 13:58:39,197 - trainer - INFO -     grad norm      : 0.15915897910793622
+2021-10-13 13:58:39,197 - trainer - INFO -     WER (argmax)   : 0.07579920959173539
+2021-10-13 13:58:39,197 - trainer - INFO -     CER (argmax)   : 0.025167749314440973
+2021-10-13 13:59:22,604 - trainer - INFO -     epoch          : 38
+2021-10-13 13:59:22,604 - trainer - INFO -     loss           : 0.05059725691874822
+2021-10-13 13:59:22,604 - trainer - INFO -     grad norm      : 0.16889127964774767
+2021-10-13 13:59:22,605 - trainer - INFO -     WER (argmax)   : 0.07292813607084672
+2021-10-13 13:59:22,605 - trainer - INFO -     CER (argmax)   : 0.024094997365000877
+2021-10-13 14:00:06,050 - trainer - INFO -     epoch          : 39
+2021-10-13 14:00:06,051 - trainer - INFO -     loss           : 0.04718977548182011
+2021-10-13 14:00:06,051 - trainer - INFO -     grad norm      : 0.11253285706043244
+2021-10-13 14:00:06,051 - trainer - INFO -     WER (argmax)   : 0.07123736671658762
+2021-10-13 14:00:06,051 - trainer - INFO -     CER (argmax)   : 0.023335150509904666
+2021-10-13 14:00:49,188 - trainer - INFO -     epoch          : 40
+2021-10-13 14:00:49,189 - trainer - INFO -     loss           : 0.04453237193326155
+2021-10-13 14:00:49,189 - trainer - INFO -     grad norm      : 0.11808735442658265
+2021-10-13 14:00:49,189 - trainer - INFO -     WER (argmax)   : 0.06804493760200332
+2021-10-13 14:00:49,189 - trainer - INFO -     CER (argmax)   : 0.022189743907076134
+2021-10-13 14:00:49,261 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch40.pth ...
+2021-10-13 14:01:32,731 - trainer - INFO -     epoch          : 41
+2021-10-13 14:01:32,731 - trainer - INFO -     loss           : 0.042723732565840083
+2021-10-13 14:01:32,731 - trainer - INFO -     grad norm      : 0.1080743042131265
+2021-10-13 14:01:32,731 - trainer - INFO -     WER (argmax)   : 0.06596907503183376
+2021-10-13 14:01:32,732 - trainer - INFO -     CER (argmax)   : 0.02021434123470569
+2021-10-13 14:02:16,521 - trainer - INFO -     epoch          : 42
+2021-10-13 14:02:16,521 - trainer - INFO -     loss           : 0.04054294104377429
+2021-10-13 14:02:16,522 - trainer - INFO -     grad norm      : 0.12359411095579466
+2021-10-13 14:02:16,522 - trainer - INFO -     WER (argmax)   : 0.06350356866165627
+2021-10-13 14:02:16,522 - trainer - INFO -     CER (argmax)   : 0.019207788405207114
+2021-10-13 14:03:00,221 - trainer - INFO -     epoch          : 43
+2021-10-13 14:03:00,222 - trainer - INFO -     loss           : 0.04178016185760498
+2021-10-13 14:03:00,222 - trainer - INFO -     grad norm      : 0.17668118625879287
+2021-10-13 14:03:00,222 - trainer - INFO -     WER (argmax)   : 0.0649463581670425
+2021-10-13 14:03:00,222 - trainer - INFO -     CER (argmax)   : 0.019342144128225262
+2021-10-13 14:03:44,424 - trainer - INFO -     epoch          : 44
+2021-10-13 14:03:44,425 - trainer - INFO -     loss           : 0.04102365747094154
+2021-10-13 14:03:44,425 - trainer - INFO -     grad norm      : 0.20754990205168725
+2021-10-13 14:03:44,425 - trainer - INFO -     WER (argmax)   : 0.06267857218987886
+2021-10-13 14:03:44,425 - trainer - INFO -     CER (argmax)   : 0.01728096141637796
+2021-10-13 14:04:28,492 - trainer - INFO -     epoch          : 45
+2021-10-13 14:04:28,492 - trainer - INFO -     loss           : 0.06602205435434977
+2021-10-13 14:04:28,492 - trainer - INFO -     grad norm      : 0.5444683695832888
+2021-10-13 14:04:28,492 - trainer - INFO -     WER (argmax)   : 0.0854838847903404
+2021-10-13 14:04:28,493 - trainer - INFO -     CER (argmax)   : 0.02295783941521947
+2021-10-13 14:04:28,562 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch45.pth ...
+2021-10-13 14:05:12,602 - trainer - INFO -     epoch          : 46
+2021-10-13 14:05:12,602 - trainer - INFO -     loss           : 0.7942168335119884
+2021-10-13 14:05:12,603 - trainer - INFO -     grad norm      : 3.502738481760025
+2021-10-13 14:05:12,603 - trainer - INFO -     WER (argmax)   : 0.441019763013926
+2021-10-13 14:05:12,603 - trainer - INFO -     CER (argmax)   : 0.16554336067023737
+2021-10-13 14:05:56,616 - trainer - INFO -     epoch          : 47
+2021-10-13 14:05:56,616 - trainer - INFO -     loss           : 0.5340726944307487
+2021-10-13 14:05:56,616 - trainer - INFO -     grad norm      : 2.2167644331852596
+2021-10-13 14:05:56,616 - trainer - INFO -     WER (argmax)   : 0.5010876772047669
+2021-10-13 14:05:56,617 - trainer - INFO -     CER (argmax)   : 0.16470988387296798
+2021-10-13 14:06:40,506 - trainer - INFO -     epoch          : 48
+2021-10-13 14:06:40,506 - trainer - INFO -     loss           : 0.07527684792876244
+2021-10-13 14:06:40,506 - trainer - INFO -     grad norm      : 0.2611278047164281
+2021-10-13 14:06:40,506 - trainer - INFO -     WER (argmax)   : 0.10066086750307895
+2021-10-13 14:06:40,507 - trainer - INFO -     CER (argmax)   : 0.024144229106038497
+2021-10-13 14:07:24,582 - trainer - INFO -     epoch          : 49
+2021-10-13 14:07:24,582 - trainer - INFO -     loss           : 0.048991669341921805
+2021-10-13 14:07:24,583 - trainer - INFO -     grad norm      : 0.23986218770345052
+2021-10-13 14:07:24,583 - trainer - INFO -     WER (argmax)   : 0.06183118582380534
+2021-10-13 14:07:24,583 - trainer - INFO -     CER (argmax)   : 0.016981878904175764
+2021-10-13 14:08:08,511 - trainer - INFO -     epoch          : 50
+2021-10-13 14:08:08,512 - trainer - INFO -     loss           : 0.041439432029922806
+2021-10-13 14:08:08,512 - trainer - INFO -     grad norm      : 0.1998903398712476
+2021-10-13 14:08:08,512 - trainer - INFO -     WER (argmax)   : 0.04895405132584212
+2021-10-13 14:08:08,513 - trainer - INFO -     CER (argmax)   : 0.013775982351260799
+2021-10-13 14:08:08,593 - trainer - INFO - Saving checkpoint: saved/models/default_config/1013_132658/checkpoint-epoch50.pth ...
