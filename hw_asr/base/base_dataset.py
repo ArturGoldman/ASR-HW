@@ -112,19 +112,9 @@ class BaseDataset(Dataset):
         initial_size = len(index)
         if max_text_length is not None:
             exceeds_text_length = np.array(
-<<<<<<< HEAD
-               # [
-               #     el
-               #     for el in index
-               #     if len(BaseTextEncoder.normalize_text(el["text"])) >= max_text_length
-               # ]
-                [len(BaseTextEncoder.normalize_text(el["text"])) >= max_text_length for el in index]
-            )
-=======
                 [
                     len(BaseTextEncoder.normalize_text(el["text"]))
                     for el in index]) <= max_text_length
->>>>>>> upstream/hw_asr_2021
             _total = exceeds_text_length.sum()
             logger.info(
                 f"{_total} ({_total / initial_size:.1%}) records are longer then "
