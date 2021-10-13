@@ -18,7 +18,7 @@
     "args": {
       "n_feats": 128,
       "hidden_size": 512,
-      "n_layers": 3
+      "n_layers": 2
     }
   },
   "data": {
@@ -73,7 +73,7 @@
     }
   },
   "trainer": {
-    "epochs": 100,
+    "epochs": 50,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
