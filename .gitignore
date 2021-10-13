@@ -106,9 +106,6 @@ input/
 saved/
 wandb/
 
-# my_checkpoint
-overfit_trial/checkpoint-epoch50.pth
-
 # editor, os cache directory
 .vscode/
 .idea/
