@@ -32,7 +32,8 @@ class CTCCharTextEncoder(CharTextEncoder):
         ans_str = ans_str.replace(self.EMPTY_TOK, '')
         return ans_str
 
-    def ctc_beam_search(self, probs: torch.tensor, beam_size: int = 100) -> List[Tuple[str, float]]:
+    def ctc_beam_search(self, probs: torch.tensor, probs_length,
+                        beam_size: int = 100) -> List[Tuple[str, float]]:
         """
         Performs beam search and returns a list of pairs (hypothesis, hypothesis probability).
         """

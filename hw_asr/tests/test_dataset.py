@@ -14,7 +14,12 @@ class TestDataset(unittest.TestCase):
         config_parser = ConfigParser.get_default_configs()
 
         ds = LibrispeechDataset(
-            "dev-clean", text_encoder=text_encoder, config_parser=config_parser
+            "dev-clean",
+            text_encoder=text_encoder,
+            config_parser=config_parser,
+            max_text_length=140,
+            max_audio_length=13,
+            limit=10,
         )
         item = ds[0]
         print(item)
@@ -24,11 +29,17 @@ class TestDataset(unittest.TestCase):
         time.sleep(1)
         config_parser = ConfigParser.get_default_configs()
 
-        audio_dir = str(ROOT_PATH / 'test_data' / 'audio')
-        transc_dir = str(ROOT_PATH / 'test_data' / 'transcriptions')
+        audio_dir = str(ROOT_PATH / "test_data" / "audio")
+        transc_dir = str(ROOT_PATH / "test_data" / "transcriptions")
 
         ds = CustomDirAudioDataset(
-            audio_dir, transc_dir, text_encoder=text_encoder, config_parser=config_parser
+            audio_dir,
+            transc_dir,
+            text_encoder=text_encoder,
+            config_parser=config_parser,
+            limit=1,
+            max_audio_length=8,
+            max_text_length=130,
         )
         item = ds[0]
         print(item)
