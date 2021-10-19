@@ -3,6 +3,15 @@ from torch import nn
 from hw_asr.base import BaseModel
 
 
+class PointwiseConv(nn.Module):
+    def __init__(self, in_channels, out_channels, stride=1):
+        super().__init__()
+        self.conv = nn.Conv1d(in_channels, out_channels, 1, stride=stride)
+
+    def forward(self, x):
+        return self.conv(x)
+
+
 class ConvBnReLU(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride=1):
         super().__init__()
@@ -24,7 +33,7 @@ class SeparableConv1d(nn.Module):
         for _ in range(in_channels):
             self.convs.append(nn.Conv1d(1, 1, kernel_size, stride))
         self.convs = nn.ModuleList(self.convs)
-        self.union_conv = nn.Conv1d(in_channels, out_channels, 1)
+        self.union_conv = PointwiseConv(in_channels, out_channels)
 
     def forward(self, x):
         # x:[batch_size x in_channels x seq_len]
@@ -61,7 +70,7 @@ class BaseBlock(nn.Module):
             nn.BatchNorm1d(out_channels)
         )
         self.second_head = nn.Sequential(
-            nn.Conv1d(in_channels, out_channels, 1),
+            PointwiseConv(in_channels, out_channels),
             nn.BatchNorm1d(out_channels)
         )
         self.drop = nn.Dropout(dropout)
@@ -98,7 +107,7 @@ class QuartzNet(BaseModel):
         self.blocks = nn.ModuleList(b_blocks)
         self.c2 = ConvBnReLU(channel_sizes[-3], channel_sizes[-2], kernel_sizes[-2])
         self.c3 = ConvBnReLU(channel_sizes[-2], channel_sizes[-1], kernel_sizes[-1])
-        self.pointwise = nn.Conv1d(channel_sizes[-1], n_class, 1)
+        self.pointwise = PointwiseConv(channel_sizes[-1], n_class)
 
     def forward(self, spectrogram, *args, **kwargs):
         # spectrogram: [batch_size x input_len x n_feats]

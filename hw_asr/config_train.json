@@ -15,8 +15,13 @@
     "spectrogram": []
   },
   "arch": {
-    "type": "BaselineModel",
+    "type": "QuartzNet",
     "args": {
+      "S": 1,
+      "R": 5,
+      "B_num": 5,
+      "kernel_sizes": [33, 33, 39, 51, 63, 75, 87, 1],
+      "channel_sizes": [256, 256, 256, 512, 512, 512, 512, 1024],
       "n_feats": 128,
       "fc_hidden": 512
     }
@@ -31,7 +36,8 @@
           "args": {
             "part": "train-clean-100",
             "max_audio_length": 20.0,
-            "max_text_length": 200
+            "max_text_length": 200,
+            "limit": 20
           }
         }
       ]
@@ -45,7 +51,8 @@
           "args": {
             "part": "dev-clean",
             "max_audio_length": 20.0,
-            "max_text_length": 200
+            "max_text_length": 200,
+            "limit": 20
           }
         }
       ]
@@ -54,7 +61,8 @@
   "optimizer": {
     "type": "SGD",
     "args": {
-      "lr": 3e-4
+      "lr": 3e-4,
+      "momentum": 0.1
     }
   },
   "loss": {
@@ -94,7 +102,7 @@
     "early_stop": 100,
     "visualize": "wandb",
     "wandb_project": "asr_project",
-    "len_epoch": 100,
+    "len_epoch": 10,
     "grad_norm_clip": 10
   }
 }
