@@ -100,7 +100,7 @@ class QuartzNet(BaseModel):
                 b_blocks.append(BaseBlock(R, channel_sizes[i-1], channel_sizes[i], kernel_sizes[i],
                                           stride, padding, dropout))
 
-        self.blocks = nn.ModuleList(b_blocks)
+        self.block_part = nn.Sequential(*b_blocks)
         self.c2 = ConvBnReLU(channel_sizes[-3], channel_sizes[-2], kernel_sizes[-2], stride, padding)
         self.c3 = ConvBnReLU(channel_sizes[-2], channel_sizes[-1], kernel_sizes[-1], stride, padding)
         self.pointwise = PointwiseConv(channel_sizes[-1], n_class)
@@ -109,8 +109,7 @@ class QuartzNet(BaseModel):
         # spectrogram: [batch_size x input_len x n_feats]
         spectrogram = spectrogram.transpose(-2, -1)
         x = self.c1(spectrogram)
-        for block in self.blocks:
-            x += block(x)
+        x = self.block_part(x)
         x = self.c2(x)
         x = self.c3(x)
         x = self.pointwise(x)
