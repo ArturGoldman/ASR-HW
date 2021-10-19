@@ -1,22 +1,24 @@
 import torch
 from torch import nn
 from hw_asr.base import BaseModel
+from collections import OrderedDict
 
 
 class PointwiseConv(nn.Module):
-    def __init__(self, in_channels, out_channels):
+    def __init__(self, in_channels, out_channels, padding='same'):
         super().__init__()
-        self.conv = nn.Conv1d(in_channels, out_channels, 1)
+        # note that padding is irrelevant here
+        self.conv = nn.Conv1d(in_channels, out_channels, 1, padding=padding)
 
     def forward(self, x):
         return self.conv(x)
 
 
 class ConvBnReLU(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride, padding):
+    def __init__(self, in_channels, out_channels, kernel_size, stride, padding=0, dilation=1):
         super().__init__()
         self.net = nn.Sequential(
-            nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding),
+            nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding, dilation=dilation),
             nn.BatchNorm1d(out_channels),
             nn.ReLU()
         )
@@ -29,7 +31,8 @@ class ConvBnReLU(nn.Module):
 class SeparableConv1d(nn.Module):
     def __init__(self, in_channels, out_channels, kernel_size, stride, padding):
         super().__init__()
-        self.channelwise_conv = nn.Conv1d(in_channels, in_channels, kernel_size, stride, padding, groups=in_channels)
+        self.channelwise_conv = nn.Conv1d(in_channels, in_channels,
+                                          kernel_size, stride, padding, groups=in_channels)
         self.union_conv = PointwiseConv(in_channels, out_channels)
 
     def forward(self, x):
@@ -55,7 +58,7 @@ class BaseModule(nn.Module):
 class BaseBlock(nn.Module):
     def __init__(self, R, in_channels, out_channels, kernel_size, stride, padding, dropout):
         super().__init__()
-        my_layers = [BaseModule(in_channels, out_channels, kernel_size, stride, padding,dropout)]
+        my_layers = [BaseModule(in_channels, out_channels, kernel_size, stride, padding, dropout)]
         for i in range(R-2):
             my_layers.append(BaseModule(out_channels, out_channels, kernel_size, stride, padding, dropout))
         self.head = nn.Sequential(
@@ -93,27 +96,40 @@ class QuartzNet(BaseModel):
         if len(kernel_sizes) != 3 + B_num or len(channel_sizes) != 3 + B_num:
             raise RuntimeError('Check input dimensions')
 
-        self.c1 = ConvBnReLU(n_feats, channel_sizes[0], kernel_sizes[0], stride, padding)
+        self.kernel_sizes = kernel_sizes
+
+        self.C1 = ConvBnReLU(n_feats, channel_sizes[0], kernel_sizes[0], stride=2)
         b_blocks = []
         for i in range(1, B_num+1):
-            for _ in range(S):
-                b_blocks.append(BaseBlock(R, channel_sizes[i-1], channel_sizes[i], kernel_sizes[i],
-                                          stride, padding, dropout))
+            for j in range(S):
+                b_blocks.append(('B{}-{}'.format(i, j+1), BaseBlock(R, channel_sizes[i-1], channel_sizes[i], kernel_sizes[i],
+                                stride, padding, dropout)))
 
-        self.block_part = nn.Sequential(*b_blocks)
-        self.c2 = ConvBnReLU(channel_sizes[-3], channel_sizes[-2], kernel_sizes[-2], stride, padding)
-        self.c3 = ConvBnReLU(channel_sizes[-2], channel_sizes[-1], kernel_sizes[-1], stride, padding)
-        self.pointwise = PointwiseConv(channel_sizes[-1], n_class)
+        self.block_part = nn.Sequential(OrderedDict(b_blocks))
+        self.conv_ending = nn.Sequential(OrderedDict([
+            ('C2', ConvBnReLU(channel_sizes[-3], channel_sizes[-2], kernel_sizes[-2], stride, dilation=2)),
+            ('C3', ConvBnReLU(channel_sizes[-2], channel_sizes[-1], kernel_sizes[-1], stride)),
+            ('C4', PointwiseConv(channel_sizes[-1], n_class))
+            ])
+        )
 
     def forward(self, spectrogram, *args, **kwargs):
         # spectrogram: [batch_size x input_len x n_feats]
         spectrogram = spectrogram.transpose(-2, -1)
-        x = self.c1(spectrogram)
+        x = self.C1(spectrogram)
         x = self.block_part(x)
-        x = self.c2(x)
-        x = self.c3(x)
-        x = self.pointwise(x)
+        x = self.conv_ending(x)
         return {"logits": x.transpose(-2, -1)}
 
     def transform_input_lengths(self, input_lengths):
-        return input_lengths  # we don't reduce time dimension here
+        # C1 changed len
+        new_ln = torch.floor((input_lengths-self.kernel_sizes[0])/2 + 1)
+
+        # C2 changed len
+        new_ln = new_ln-2*(self.kernel_sizes[-2] - 1) + 1
+
+        # C3 changed len
+        new_ln = new_ln-self.kernel_sizes[-1] + 1
+
+        # C4 does not change len
+        return new_ln
