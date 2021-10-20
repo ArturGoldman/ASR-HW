@@ -128,7 +128,7 @@ class QuartzNet(BaseModel):
         # C2 changed len
         new_ln = new_ln-2*(self.kernel_sizes[-2] - 1) + 1
 
-        # C3 changed len
+        # C3 changed len (based on paper it also doesn't change len: K should be 1
         new_ln = new_ln-self.kernel_sizes[-1] + 1
 
         # C4 does not change len
