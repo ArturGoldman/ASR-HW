@@ -13,3 +13,4 @@ torch_audiomentations
 editdistance
 wandb
 soundfile
+pyctcdecode
