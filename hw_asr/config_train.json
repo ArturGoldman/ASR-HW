@@ -67,7 +67,9 @@
   },
   "loss": {
     "type": "CTCLoss",
-    "args": {}
+    "args": {
+      "zero_infinity": true
+    }
   },
   "metrics": [
     {
@@ -100,7 +102,7 @@
     "verbosity": 2,
     "monitor": "min val_loss",
     "early_stop": 100,
-    "visualize": "wandb",
+    "visualize": "tensorboard",
     "wandb_project": "asr_project",
     "len_epoch": 10,
     "grad_norm_clip": 10

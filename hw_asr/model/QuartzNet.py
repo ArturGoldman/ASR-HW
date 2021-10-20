@@ -5,66 +5,47 @@ from collections import OrderedDict
 
 
 class PointwiseConv(nn.Module):
-    def __init__(self, in_channels, out_channels, padding='same'):
+    def __init__(self, in_channels, out_channels):
         super().__init__()
-        # note that padding is irrelevant here
-        self.conv = nn.Conv1d(in_channels, out_channels, 1, padding=padding)
+        self.conv = nn.Conv1d(in_channels, out_channels, 1)
 
     def forward(self, x):
         return self.conv(x)
 
 
-class ConvBnReLU(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride, padding=0, dilation=1):
+class ConvBn(nn.Module):
+    def __init__(self, in_channels, out_channels, kernel_size, stride=1,
+                 padding=0, dilation=1, is_tcs=False, add_ReLU=True):
         super().__init__()
-        self.net = nn.Sequential(
-            nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding, dilation=dilation),
-            nn.BatchNorm1d(out_channels),
-            nn.ReLU()
-        )
+        mod_list = [
+            nn.Conv1d(in_channels, in_channels, kernel_size, stride, padding, groups=in_channels, dilation=dilation)
+        ]
+
+        if is_tcs:
+            mod_list.append(PointwiseConv(out_channels, out_channels))
+
+        mod_list.append(nn.BatchNorm1d(out_channels))
+
+        if add_ReLU:
+            mod_list.append(nn.ReLU())
+
+        self.net = nn.Sequential(*mod_list)
 
     def forward(self, x):
         # x: [batch_size x in_channels x length]
         return self.net(x)
 
 
-class SeparableConv1d(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride, padding):
-        super().__init__()
-        self.channelwise_conv = nn.Conv1d(in_channels, in_channels,
-                                          kernel_size, stride, padding, groups=in_channels)
-        self.union_conv = PointwiseConv(in_channels, out_channels)
-
-    def forward(self, x):
-        # x:[batch_size x in_channels x seq_len]
-        out = self.channelwise_conv(x)
-        return self.union_conv(out)
-
-
-class BaseModule(nn.Module):
-    def __init__(self, in_channels, out_channels, kernel_size, stride, padding, dropout):
-        super().__init__()
-        self.net = nn.Sequential(
-            SeparableConv1d(in_channels, out_channels, kernel_size, stride, padding),
-            nn.BatchNorm1d(out_channels),
-            nn.Dropout(dropout)
-        )
-
-    def forward(self, x):
-        # x:[batch_size x in_channels x seq_len]
-        return self.net(x)
-
-
 class BaseBlock(nn.Module):
-    def __init__(self, R, in_channels, out_channels, kernel_size, stride, padding, dropout):
+    def __init__(self, R, in_channels, out_channels, kernel_size, dropout, padding='same', is_tcs=True):
         super().__init__()
-        my_layers = [BaseModule(in_channels, out_channels, kernel_size, stride, padding, dropout)]
+        my_layers = [ConvBn(in_channels, out_channels, kernel_size, padding=padding, is_tcs=is_tcs)]
         for i in range(R-2):
-            my_layers.append(BaseModule(out_channels, out_channels, kernel_size, stride, padding, dropout))
+            my_layers.append(ConvBn(out_channels, out_channels, kernel_size, padding=padding, is_tcs=is_tcs))
+
         self.head = nn.Sequential(
             *my_layers,
-            SeparableConv1d(out_channels, out_channels, kernel_size, stride, padding),
-            nn.BatchNorm1d(out_channels)
+            ConvBn(out_channels, out_channels, kernel_size, padding=padding, is_tcs=is_tcs, add_ReLU=False),
         )
         self.second_head = nn.Sequential(
             PointwiseConv(in_channels, out_channels),
@@ -80,7 +61,7 @@ class BaseBlock(nn.Module):
 
 class QuartzNet(BaseModel):
     def __init__(self, S, R, B_num, n_feats, n_class, kernel_sizes, channel_sizes,
-                 stride=1, padding='same', dropout=0.1, *args, **kwargs):
+                 dropout=0.1, *args, **kwargs):
         """
         Defines model QuartzNet ((S*B_num)x B_num)
         B_num: number of BaseBlocks
@@ -98,18 +79,19 @@ class QuartzNet(BaseModel):
 
         self.kernel_sizes = kernel_sizes
 
-        self.C1 = ConvBnReLU(n_feats, channel_sizes[0], kernel_sizes[0], stride=2)
+        self.C1 = ConvBn(n_feats, channel_sizes[0], kernel_sizes[0], stride=2)
         b_blocks = []
         for i in range(1, B_num+1):
             for j in range(S):
-                b_blocks.append(('B{}-{}'.format(i, j+1), BaseBlock(R, channel_sizes[i-1], channel_sizes[i], kernel_sizes[i],
-                                stride, padding, dropout)))
+                b_blocks.append(('B{}-{}'.format(i, j+1),
+                                 BaseBlock(R, channel_sizes[i-1], channel_sizes[i], kernel_sizes[i], dropout,
+                                           padding='same', is_tcs=True)))
 
         self.block_part = nn.Sequential(OrderedDict(b_blocks))
         self.conv_ending = nn.Sequential(OrderedDict([
-            ('C2', ConvBnReLU(channel_sizes[-3], channel_sizes[-2], kernel_sizes[-2], stride, dilation=2)),
-            ('C3', ConvBnReLU(channel_sizes[-2], channel_sizes[-1], kernel_sizes[-1], stride)),
-            ('C4', PointwiseConv(channel_sizes[-1], n_class))
+            ('C2', ConvBn(channel_sizes[-3], channel_sizes[-2], kernel_sizes[-2], dilation=2)),
+            ('C3', ConvBn(channel_sizes[-2], channel_sizes[-1], kernel_sizes[-1])),
+            ('C4', PointwiseConv(channel_sizes[-1], n_class)),
             ])
         )
 
@@ -123,10 +105,10 @@ class QuartzNet(BaseModel):
 
     def transform_input_lengths(self, input_lengths):
         # C1 changed len
-        new_ln = torch.floor((input_lengths-self.kernel_sizes[0])/2 + 1)
+        new_ln = torch.floor((input_lengths-self.kernel_sizes[0])/2 + 1).int()
 
         # C2 changed len
-        new_ln = new_ln-2*(self.kernel_sizes[-2] - 1) + 1
+        new_ln = new_ln-2*(self.kernel_sizes[-2] - 1)
 
         # C3 changed len (based on paper it also doesn't change len: K should be 1
         new_ln = new_ln-self.kernel_sizes[-1] + 1
