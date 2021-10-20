@@ -18,7 +18,7 @@ class ConvBn(nn.Module):
                  padding=0, dilation=1, is_tcs=False, add_ReLU=True):
         super().__init__()
         mod_list = [
-            nn.Conv1d(in_channels, in_channels, kernel_size, stride, padding, groups=in_channels, dilation=dilation)
+            nn.Conv1d(in_channels, out_channels, kernel_size, stride, padding, groups=in_channels, dilation=dilation)
         ]
 
         if is_tcs:
@@ -82,9 +82,12 @@ class QuartzNet(BaseModel):
         self.C1 = ConvBn(n_feats, channel_sizes[0], kernel_sizes[0], stride=2)
         b_blocks = []
         for i in range(1, B_num+1):
-            for j in range(S):
+            b_blocks.append(('B{}-1'.format(i),
+                             BaseBlock(R, channel_sizes[i-1], channel_sizes[i], kernel_sizes[i], dropout,
+                                       padding='same', is_tcs=True)))
+            for j in range(1, S):
                 b_blocks.append(('B{}-{}'.format(i, j+1),
-                                 BaseBlock(R, channel_sizes[i-1], channel_sizes[i], kernel_sizes[i], dropout,
+                                 BaseBlock(R, channel_sizes[i], channel_sizes[i], kernel_sizes[i], dropout,
                                            padding='same', is_tcs=True)))
 
         self.block_part = nn.Sequential(OrderedDict(b_blocks))
