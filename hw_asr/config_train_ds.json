@@ -6,7 +6,7 @@
     "spectrogram": {
       "type": "MelSpectrogram",
       "args": {
-        "n_mels": 128
+        "n_mels": 64
       }
     }
   },
@@ -28,7 +28,7 @@
   },
   "data": {
     "train": {
-      "batch_size": 50,
+      "batch_size": 20,
       "num_workers": 5,
       "datasets": [
         {
@@ -37,13 +37,14 @@
             "part": "train-clean-100",
             "max_audio_length": 20.0,
             "max_text_length": 200,
-            "data_dir": "/home/jupyter/mnt/datasets/LibriSpeech/LibriSpeech"
+            "data_dir": "/home/jupyter/mnt/datasets/LibriSpeech/LibriSpeech",
+            "limit": 20
           }
         }
       ]
     },
     "val": {
-      "batch_size": 50,
+      "batch_size": 20,
       "num_workers": 5,
       "datasets": [
         {
@@ -52,7 +53,8 @@
             "part": "dev-clean",
             "max_audio_length": 20.0,
             "max_text_length": 200,
-            "data_dir": "/home/jupyter/mnt/datasets/LibriSpeech/LibriSpeech"
+            "data_dir": "/home/jupyter/mnt/datasets/LibriSpeech/LibriSpeech",
+            "limit": 20
           }
         }
       ]

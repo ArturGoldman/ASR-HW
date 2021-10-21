@@ -6,7 +6,7 @@
     "spectrogram": {
       "type": "MelSpectrogram",
       "args": {
-        "n_mels": 128
+        "n_mels": 64
       }
     }
   },
@@ -22,7 +22,7 @@
       "B_num": 5,
       "kernel_sizes": [33, 33, 39, 51, 63, 75, 87, 1],
       "channel_sizes": [256, 256, 256, 512, 512, 512, 512, 1024],
-      "n_feats": 128,
+      "n_feats": 64,
       "fc_hidden": 512
     }
   },

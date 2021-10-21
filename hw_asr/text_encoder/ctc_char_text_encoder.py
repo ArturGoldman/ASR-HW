@@ -4,8 +4,6 @@ import torch
 
 from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
 
-from pyctcdecode import build_ctcdecoder
-
 
 class CTCCharTextEncoder(CharTextEncoder):
     EMPTY_TOK = "^"
@@ -18,8 +16,6 @@ class CTCCharTextEncoder(CharTextEncoder):
         for text in alphabet:
             self.ind2char[max(self.ind2char.keys()) + 1] = text
         self.char2ind = {v: k for k, v in self.ind2char.items()}
-
-        self.ctcdecoder = build_ctcdecoder([self.EMPTY_TOK]+alphabet)
 
     def ctc_decode(self, inds: List[int]) -> str:
         if len(inds) == 0:

@@ -92,7 +92,7 @@ class QuartzNet(BaseModel):
 
         self.block_part = nn.Sequential(OrderedDict(b_blocks))
         self.conv_ending = nn.Sequential(OrderedDict([
-            ('C2', ConvBn(channel_sizes[-3], channel_sizes[-2], kernel_sizes[-2], dilation=2)),
+            ('C2', ConvBn(channel_sizes[-3], channel_sizes[-2], kernel_sizes[-2], padding='same', dilation=2)),
             ('C3', ConvBn(channel_sizes[-2], channel_sizes[-1], kernel_sizes[-1])),
             ('C4', PointwiseConv(channel_sizes[-1], n_class)),
             ])
@@ -110,8 +110,8 @@ class QuartzNet(BaseModel):
         # C1 changed len
         new_ln = torch.floor((input_lengths-self.kernel_sizes[0])/2 + 1).int()
 
-        # C2 changed len
-        new_ln = new_ln-2*(self.kernel_sizes[-2] - 1)
+        # C2 changed len - added padding=same
+        #new_ln = new_ln-2*(self.kernel_sizes[-2] - 1)
 
         # C3 changed len (based on paper it also doesn't change len: K should be 1
         new_ln = new_ln-self.kernel_sizes[-1] + 1
