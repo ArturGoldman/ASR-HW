@@ -39,6 +39,7 @@ class Trainer(BaseTrainer):
         self.text_encoder = text_encoder
         self.config = config
         self.data_loader = data_loader
+
         if len_epoch is None:
             # epoch-based training
             self.len_epoch = len(self.data_loader)
@@ -47,6 +48,12 @@ class Trainer(BaseTrainer):
             self.data_loader = inf_loop(data_loader)
             self.len_epoch = len_epoch
         self.valid_data_loader = valid_data_loader
+
+        train_dataset = self.data_loader.dataset
+        for i in range(5):
+            self.writer.add_audio("Train_audio_example_{}".format(i+1), train_dataset[i]['audio'],
+                                  self.config["preprocessing"]["sr"])
+
         self.do_validation = self.valid_data_loader is not None
         self.lr_scheduler = lr_scheduler
         self.log_step = 10

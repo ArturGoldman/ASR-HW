@@ -106,6 +106,9 @@ input/
 saved/
 wandb/
 
+#my file to check whether augmentations work ok
+hw_asr/tests/test_augs.py
+
 # editor, os cache directory
 .vscode/
 .idea/
