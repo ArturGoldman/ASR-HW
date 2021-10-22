@@ -10,12 +10,13 @@
       }
     }
   },
+  "boos_BPE": true,
   "augmentations": {
     "wave": [
       {
         "type": "GaussianNoise",
         "args": {
-          "std": 0.01
+          "std": "random"
         }
       },
       {
@@ -39,17 +40,16 @@
           "sr": 16000,
           "min_gain_in_db": -15.0,
           "max_gain_in_db": 5.0,
-          "p": 0.5
+          "p": 0.2
+        }
+      },
+      {
+        "type": "DimAligner",
+        "args": {
         }
       }
     ],
     "spectrogram": [
-      {
-        "type": "NormalizeAug",
-        "args": {
-          "normalize": "touniform"
-        }
-      },
       {
         "type": "MaskAug",
         "args": {

@@ -5,9 +5,12 @@ import librosa
 from hw_asr.augmentations.base import AugmentationBase
 import random
 
+# have to look out whether augmentation is applied or no
 
 class GaussianNoise(AugmentationBase):
     def __init__(self, std=0.05):
+        if std == 'random':
+            std = random.uniform(1e-7, 0.03)
         self.dist = torch.distributions.Normal(0, std)
 
     def __call__(self, data: Tensor):
@@ -29,7 +32,7 @@ class RandomPitchShift(AugmentationBase):
             if self.n_steps == "random":
                 ps = (random.random()-0.5)/self.normaliser
             data = librosa.effects.pitch_shift(data.numpy().squeeze(), self.sr, ps)
-        return torch.Tensor(data).reshape(1, -1)
+        return torch.Tensor(data)
 
 
 class TimeStretching(AugmentationBase):
@@ -41,7 +44,7 @@ class TimeStretching(AugmentationBase):
         q = random.random()
         if q < self.p:
             data = librosa.effects.time_stretch(data.numpy().squeeze(), self.rate)
-        return torch.tensor(data).reshape(1, -1)
+        return torch.tensor(data)
 
 
 class Gain(AugmentationBase):
@@ -50,4 +53,9 @@ class Gain(AugmentationBase):
         self._aug = torch_audiomentations.Gain(*args, **kwargs)
 
     def __call__(self, data: Tensor):
-        return torch.Tensor(self._aug(data, sample_rate=self.sr))
+        return torch.Tensor(self._aug(data.squeeze().unsqueeze(0).unsqueeze(0), sample_rate=self.sr)).squeeze(0)
+
+
+class DimAligner(AugmentationBase):
+    def __call__(self, data: Tensor):
+        return data.squeeze().unsqueeze(0)

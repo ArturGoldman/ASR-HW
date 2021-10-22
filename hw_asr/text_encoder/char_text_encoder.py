@@ -50,3 +50,4 @@ class CharTextEncoder(BaseTextEncoder):
     @classmethod
     def get_simple_alphabet(cls):
         return cls(alphabet=list(ascii_lowercase + ' '))
+

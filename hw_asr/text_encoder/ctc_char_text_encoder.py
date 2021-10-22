@@ -4,6 +4,7 @@ import torch
 
 from hw_asr.text_encoder.char_text_encoder import CharTextEncoder
 
+from ctcdecode import CTCBeamDecoder
 
 class CTCCharTextEncoder(CharTextEncoder):
     EMPTY_TOK = "^"
@@ -40,6 +41,23 @@ class CTCCharTextEncoder(CharTextEncoder):
         assert len(probs.shape) == 2
         char_length, voc_size = probs.shape
         assert voc_size == len(self.ind2char)
+        labels = ""
+        for i in range(len(self.ind2char)):
+            labels += self.ind2char[i]
+        decoder = CTCBeamDecoder(
+            labels,
+            model_path=None,
+            alpha=0,
+            beta=0,
+            cutoff_top_n=40,
+            cutoff_prob=1.0,
+            beam_width=beam_size,
+            num_processes=4,
+            blank_id=0,
+            log_probs_input=True
+        )
+        beam_results, beam_scores, timesteps, out_lens = decoder.decode(probs)
+        print(beam_results, beam_scores)
         hypos = []
         # TODO: your code here
         raise NotImplementedError

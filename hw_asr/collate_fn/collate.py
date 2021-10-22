@@ -34,7 +34,7 @@ def collate_fn(dataset_items: List[dict]):
 
     for i in range(len(dataset_items)):
         item = dataset_items[i]
-        spec_out[i, :, : spectrogram_lengths[i]] = item['spectrogram']
+        spec_out[i, :, :spectrogram_lengths[i]] = item['spectrogram']
         text_enc_out[i, :text_enc_lengths[i]] = item['text_encoded']
 
     return {
@@ -42,5 +42,6 @@ def collate_fn(dataset_items: List[dict]):
         'text_encoded': text_enc_out.int(),
         'text_encoded_length': torch.tensor(text_enc_lengths),
         'text': initial_normalised_encodings,
+        'audio': dataset_items[0]["audio"],
         'spectrogram_length': torch.tensor(spectrogram_lengths)
     }
