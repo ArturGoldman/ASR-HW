@@ -14,6 +14,7 @@ from hw_asr.trainer import Trainer
 from hw_asr.utils import ROOT_PATH
 from hw_asr.utils.parse_config import ConfigParser
 import torch.nn.functional as F
+from hw_asr.metric.utils import calc_wer, calc_cer
 
 DEFAULT_TEST_CONFIG_PATH = ROOT_PATH / "default_test_config.json"
 DEFAULT_CHECKPOINT_PATH = ROOT_PATH / "default_test_model" / "checkpoint.pth"
@@ -53,6 +54,12 @@ def main(config, out_file):
     model.eval()
 
     results = []
+    metrics = {
+        "WER (Argmax)": 0,
+        "CER (Argmax)": 0,
+        "WER (Beam-Search + LM shallow fusion):": 0,
+        "CER (Beam-Search + LM shallow fusion):": 0
+    }
 
     with torch.no_grad():
         for i, batch in enumerate(tqdm(dataloaders["test"])):
@@ -70,13 +77,26 @@ def main(config, out_file):
             batch["probs"] = batch["log_probs"].exp().cpu()
             batch["argmax"] = batch["probs"].argmax(-1)
             for i in range(len(batch["text"])):
-                results.append({
+                item = {
                     "ground_truth": batch["text"][i],
                     "pred_text_argmax": text_encoder.ctc_decode(batch["argmax"][i][:int(batch["log_probs_length"][i])]),
                     "pred_text_beam_search": text_encoder.ctc_beam_search(
-                        batch["probs"][i][:int(batch["log_probs_length"][i])], beam_size=100
-                    )[:10],
-                })
+                        batch["probs"][i][:int(batch["log_probs_length"][i])])[:10],
+                }
+                results.append(item)
+                cur_metrics = {
+                    "WER (Argmax)": calc_wer(item["ground_truth"], item["pred_text_argmax"]),
+                    "CER (Argmax)": calc_cer(item["ground_truth"], item["pred_text_argmax"]),
+                    "WER (Beam-Search + LM shallow fusion):": calc_wer(item["ground_truth"],
+                                                                       item["pred_text_beam_search"][0][0]),
+                    "CER (Beam-Search + LM shallow fusion):": calc_cer(item["ground_truth"],
+                                                                       item["pred_text_beam_search"][0][0])
+                }
+                for key, num in cur_metrics.items():
+                    metrics[key] += num
+    for key, num in metrics:
+        print(key, num/len(results))
+
     with Path(out_file).open('w') as f:
         json.dump(results, f, indent=2)
 

@@ -1,5 +1,5 @@
 {
-  "name": "default_config",
+  "name": "train_one",
   "n_gpu": 1,
   "preprocessing": {
     "sr": 16000,
@@ -10,7 +10,6 @@
       }
     }
   },
-  "boos_BPE": true,
   "augmentations": {
     "wave": [
       {
@@ -63,7 +62,7 @@
   "arch": {
     "type": "QuartzNet",
     "args": {
-      "S": 1,
+      "S": 3,
       "R": 5,
       "B_num": 5,
       "kernel_sizes": [33, 33, 39, 51, 63, 75, 87, 1],
@@ -157,15 +156,15 @@
     }
   },
   "trainer": {
-    "epochs": 5,
+    "epochs": 50,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
     "monitor": "min val_loss",
     "early_stop": 100,
-    "visualize": "tensorboard",
+    "visualize": "wandb",
     "wandb_project": "asr_project",
-    "len_epoch": 10,
+    "len_epoch": 100,
     "grad_norm_clip": 10
   }
 }
