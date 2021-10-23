@@ -11,8 +11,53 @@
     }
   },
   "augmentations": {
-    "wave": [],
-    "spectrogram": []
+    "wave": [
+      {
+        "type": "GaussianNoise",
+        "args": {
+          "std": "random"
+        }
+      },
+      {
+        "type": "RandomPitchShift",
+        "args": {
+          "p": 0.2,
+          "sr": 16000,
+          "n_steps": "random"
+        }
+      },
+      {
+        "type": "TimeStretching",
+        "args": {
+          "rate": 2,
+          "p": 0.2
+        }
+      },
+      {
+        "type": "Gain",
+        "args": {
+          "sr": 16000,
+          "min_gain_in_db": -15.0,
+          "max_gain_in_db": 5.0,
+          "p": 0.2
+        }
+      },
+      {
+        "type": "DimAligner",
+        "args": {
+        }
+      }
+    ],
+    "spectrogram": [
+      {
+        "type": "MaskAug",
+        "args": {
+          "p": 0.5,
+          "time_percent": 0.05,
+          "freq_percent": 0.1
+        }
+      }
+    ]
   },
   "arch": {
     "type": "QuartzNet",
@@ -28,7 +73,7 @@
   },
   "data": {
     "train": {
-      "batch_size": 50,
+      "batch_size": 100,
       "num_workers": 5,
       "datasets": [
         {
@@ -42,7 +87,7 @@
       ]
     },
     "val": {
-      "batch_size": 50,
+      "batch_size": 100,
       "num_workers": 5,
       "datasets": [
         {
@@ -54,12 +99,27 @@
           }
         }
       ]
+    },
+    "test": {
+      "batch_size": 100,
+      "num_workers": 5,
+      "datasets": [
+        {
+          "type": "LibrispeechDataset",
+          "args": {
+            "part": "test-clean",
+            "max_audio_length": 20.0,
+            "max_text_length": 200
+          }
+        }
+      ]
     }
   },
   "optimizer": {
-    "type": "Adam",
+    "type": "SGD",
     "args": {
-      "lr": 3e-4
+      "lr": 3e-4,
+      "momentum": 0.9
     }
   },
   "loss": {

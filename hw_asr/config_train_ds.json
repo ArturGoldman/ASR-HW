@@ -83,7 +83,7 @@
             "part": "train-clean-100",
             "max_audio_length": 20.0,
             "max_text_length": 200,
-            "data_dir": "/home/jupyter/mnt/datasets/LibriSpeech/LibriSpeech"
+            "data_dir": "/home/jupyter/mnt/s3/bucket-hse-rw/data/datasets/librispeech"
           }
         }
       ]
@@ -95,10 +95,25 @@
         {
           "type": "LibrispeechDataset",
           "args": {
+            "part": "dev-clean",
+            "max_audio_length": 20.0,
+            "max_text_length": 200,
+            "data_dir": "/home/jupyter/mnt/s3/bucket-hse-rw/data/datasets/librispeech"
+          }
+        }
+      ]
+    },
+    "test": {
+      "batch_size": 100,
+      "num_workers": 5,
+      "datasets": [
+        {
+          "type": "LibrispeechDataset",
+          "args": {
             "part": "test-clean",
             "max_audio_length": 20.0,
             "max_text_length": 200,
-            "data_dir": "/home/jupyter/mnt/datasets/LibriSpeech/LibriSpeech"
+            "data_dir": "/home/jupyter/mnt/s3/bucket-hse-rw/data/datasets/librispeech"
           }
         }
       ]
@@ -142,15 +157,15 @@
     }
   },
   "trainer": {
-    "epochs": 50,
+    "epochs": 5,
     "save_dir": "saved/",
     "save_period": 5,
     "verbosity": 2,
     "monitor": "min val_loss",
     "early_stop": 100,
-    "visualize": "wandb",
+    "visualize": "tensorboard",
     "wandb_project": "asr_project",
-    "len_epoch": 100,
+    "len_epoch": 10,
     "grad_norm_clip": 10
   }
 }

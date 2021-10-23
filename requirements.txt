@@ -15,4 +15,3 @@ editdistance
 wandb
 soundfile
 tokenizers
-ctcdecode
