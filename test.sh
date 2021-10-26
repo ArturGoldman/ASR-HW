@@ -10,4 +10,4 @@ pip install ./ctcdecode
 wget -q -O ./ASR-HW/lm.arpa.gz http://www.openslr.org/resources/11/3-gram.pruned.1e-7.arpa.gz
 gunzip ./ASR-HW/lm.arpa.gz
 
-python ./ASR-HW/test.py -c ./ASR-HW/default_test/config.json -r ./ASR-HW/default_test/model.pth
+python3 ./ASR-HW/test.py -c ./ASR-HW/default_test/config.json -r ./ASR-HW/default_test/model.pth
