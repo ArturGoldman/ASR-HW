@@ -94,7 +94,7 @@ def main(config, out_file):
                 }
                 for key, num in cur_metrics.items():
                     metrics[key] += num
-    for key, num in metrics:
+    for key, num in metrics.items():
         print(key, num/len(results))
 
     with Path(out_file).open('w') as f:

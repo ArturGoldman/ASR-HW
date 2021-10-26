@@ -13,6 +13,7 @@ from hw_asr.text_encoder.ctc_char_text_encoder import CTCCharTextEncoder
 from hw_asr.trainer import Trainer
 from hw_asr.utils import prepare_device
 from hw_asr.utils.parse_config import ConfigParser
+import torch_optimizer
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -54,7 +55,10 @@ def main(config):
 
     # build optimizer, learning rate scheduler. delete every lines containing lr_scheduler for disabling scheduler
     trainable_params = filter(lambda p: p.requires_grad, model.parameters())
-    optimizer = config.init_obj(config["optimizer"], torch.optim, trainable_params)
+    if "torch_optimizer" in config.config:
+        optimizer = config.init_obj(config["torch_optimizer"], torch_optimizer, trainable_params)
+    else:
+        optimizer = config.init_obj(config["optimizer"], torch.optim, trainable_params)
     lr_scheduler = config.init_obj(config["lr_scheduler"], torch.optim.lr_scheduler, optimizer)
 
     trainer = Trainer(

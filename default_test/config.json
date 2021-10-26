@@ -1,5 +1,5 @@
 {
-  "name": "train-1",
+  "name": "train-4",
   "n_gpu": 1,
   "preprocessing": {
     "sr": 16000,
@@ -73,7 +73,7 @@
   },
   "data": {
     "train": {
-      "batch_size": 50,
+      "batch_size": 100,
       "num_workers": 5,
       "datasets": [
         {
@@ -151,7 +151,7 @@
     }
   },
   "trainer": {
-    "epochs": 100,
+    "epochs": 400,
     "save_dir": "saved/",
     "save_period": 20,
     "verbosity": 2,

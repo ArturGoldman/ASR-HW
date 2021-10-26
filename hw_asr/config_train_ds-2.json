@@ -1,5 +1,5 @@
 {
-  "name": "train-1",
+  "name": "train-2",
   "n_gpu": 1,
   "preprocessing": {
     "sr": 16000,
@@ -151,7 +151,7 @@
     }
   },
   "trainer": {
-    "epochs": 100,
+    "epochs": 200,
     "save_dir": "saved/",
     "save_period": 20,
     "verbosity": 2,
