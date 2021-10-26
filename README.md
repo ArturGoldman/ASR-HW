@@ -17,6 +17,8 @@ If ran on Yandex DataSphere, last comand should be run in different cell using G
 
 After running test, output.json file should be created, and metric values should be printed.
 
+Warning: test.sh should be run on linux. Comand execution went well on Yandex DataSphere and Google Colab, but had bad time on Mac OS.
+
 ## What should be noted
 By default configs assume, that training and testing is run on DataSphere with bucket bucket-hse-rw with LibriSpeech data. If directory is different, "data_dir" should be changed in configs
 
