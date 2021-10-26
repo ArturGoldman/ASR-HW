@@ -15,6 +15,8 @@ If ran on Yandex DataSphere, last comand should be run in different cell using G
 ./ASR-HW/test.sh
 ```
 
+After running test, output.json file should be created, and metric values should be printed.
+
 ## What should be noted
 By default configs assume, that training and testing is run on DataSphere with bucket bucket-hse-rw with LibriSpeech data. If directory is different, "data_dir" should be changed in configs
 
