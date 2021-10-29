@@ -79,7 +79,7 @@
         {
           "type": "LibrispeechDataset",
           "args": {
-            "part": "test-clean",
+            "part": "test-clean"
           }
         }
       ]
