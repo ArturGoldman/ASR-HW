@@ -1,5 +1,7 @@
 # ASR-HW
 
+Implementing [QuertzNet](https://arxiv.org/abs/1910.10261)
+
 ## Test running guide
 
 To run test 
