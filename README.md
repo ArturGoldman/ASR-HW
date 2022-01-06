@@ -25,6 +25,8 @@ Warning: test.sh should be run on linux. Comand execution went well on Yandex Da
 By default configs assume, that training and testing is run on DataSphere with bucket bucket-hse-rw with LibriSpeech data. If directory is different, "data_dir" should be changed in configs
 
 ## Results
+Details of training can be seen here: https://wandb.ai/artgoldman/asr_project
+
 Managed to achieve following metric values on test-clean by training QuartzNet5x5 on train-clean-100, using Adam.
 
 - WER (Argmax): 0.7479754829078634
